@@ -221,7 +221,7 @@
             android:text="초기화"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/b7"
+            android:id="@+id/b5"
             android:layout_weight="1" />
 
         <Button
@@ -245,7 +245,7 @@
             android:text="새 주문"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/b5"
+            android:id="@+id/b7"
             android:layout_weight="1" />
     </LinearLayout>
 

@@ -2,6 +2,10 @@ package com.example.kimsoohyeong.week5;
 
 import android.text.format.Time;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by KimSooHyeong on 2017. 3. 30..
  */
@@ -17,19 +21,20 @@ public class Table {
 
     public Table(String tableName) {
         this.tableName = tableName;
-        this.enterTime = Time.getCurrentTimezone();
-        this.spaCnt = this.pizCnt = this.membership = this.total = 0;
-        this.isEmpty = true;
+        SimpleDateFormat time = new SimpleDateFormat("yyyyMMdd HH:mm");
+        enterTime = time.format(new Date());
+        spaCnt = pizCnt = membership = total = 0;
+        isEmpty = true;
     }
 
     public void clear() {
-        enterTime = Time.getCurrentTimezone();
-        this.spaCnt = this.pizCnt = this.membership = this.total = 0;
-        this.isEmpty = true;
+        SimpleDateFormat time = new SimpleDateFormat("yyyyMMdd HH:mm");
+        enterTime = time.format(new Date());
+        spaCnt = pizCnt = membership = total = 0;
+        isEmpty = true;
     }
 
-    public void setData(String name, String time, int spa, int piz, int mem) {
-        tableName = name;
+    public void setData(String time, int spa, int piz, int mem) {
         enterTime = time;
         spaCnt = spa;
         pizCnt = piz;
