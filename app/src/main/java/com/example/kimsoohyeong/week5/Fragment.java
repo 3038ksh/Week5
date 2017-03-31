@@ -46,12 +46,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                 if (table[0].isEmpty()) {
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
-                    t1.setText(table[0].getTableName() + " 테이블");
-                    t2.setText(table[0].getEnterTime());
-                    t3.setText(Integer.toString(table[0].getSpaCnt()));
-                    t4.setText(Integer.toString(table[0].getPizCnt()));
-                    t5.setText(membershipName[table[0].getMembership()]);
-                    t6.setText(Integer.toString(table[0].getTotal()));
+                    setData(0);
                 }
             }
         });
@@ -62,12 +57,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                 if (table[1].isEmpty()) {
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
-                    t1.setText(table[1].getTableName() + " 테이블");
-                    t2.setText(table[1].getEnterTime());
-                    t3.setText(Integer.toString(table[1].getSpaCnt()));
-                    t4.setText(Integer.toString(table[1].getPizCnt()));
-                    t5.setText(membershipName[table[1].getMembership()]);
-                    t6.setText(Integer.toString(table[1].getTotal()));
+                    setData(1);
                 }
             }
         });
@@ -78,12 +68,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                 if (table[2].isEmpty()) {
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
-                    t1.setText(table[2].getTableName() + " 테이블");
-                    t2.setText(table[2].getEnterTime());
-                    t3.setText(Integer.toString(table[2].getSpaCnt()));
-                    t4.setText(Integer.toString(table[2].getPizCnt()));
-                    t5.setText(membershipName[table[2].getMembership()]);
-                    t6.setText(Integer.toString(table[2].getTotal()));
+                    setData(2);
                 }
             }
         });
@@ -94,30 +79,86 @@ public class Fragment extends android.support.v4.app.Fragment {
                 if (table[3].isEmpty()) {
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
-                    t1.setText(table[3].getTableName() + " 테이블");
-                    t2.setText(table[3].getEnterTime());
-                    t3.setText(Integer.toString(table[3].getSpaCnt()));
-                    t4.setText(Integer.toString(table[3].getPizCnt()));
-                    t5.setText(membershipName[table[3].getMembership()]);
-                    t6.setText(Integer.toString(table[3].getTotal()));
+                    setData(3);
                 }
             }
         });
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (currentNum == -1) {
+                    Toast.makeText(getContext(), "먼저 테이블을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                table[currentNum].clear();
+                clearData(currentNum);
             }
         });
         b6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (currentNum == -1) {
+                    Toast.makeText(getContext(), "먼저 테이블을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                final View dialogView = inflater.inflate(R.layout.dialog, null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(v.getContext());
+                dlg.setTitle("주문내역 수정")
+                        .setView(dialogView)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setPositiveButton("취소", null)
+                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String str1, str2;
+                                int cnt1, cnt2;
+                                EditText e1, e2;
+                                RadioButton r1, r2, r3;
 
+                                e1 = (EditText)dialogView.findViewById(R.id.e1);
+                                e2 = (EditText)dialogView.findViewById(R.id.e2);
+                                r1 = (RadioButton)dialogView.findViewById(R.id.r1);
+                                r2 = (RadioButton)dialogView.findViewById(R.id.r2);
+                                r3 = (RadioButton)dialogView.findViewById(R.id.r3);
+
+                                e1.setText(Integer.parseInt(t3.getText().toString()));
+                                e2.setText(Integer.parseInt(t4.getText().toString()));
+
+                                switch (table[currentNum].getMembership()) {
+                                    case 0:
+                                        r1.setChecked(true);
+                                        break;
+                                    case 1:
+                                        r2.setChecked(true);
+                                        break;
+                                    case 2:
+                                        r3.setChecked(true);
+                                        break;
+                                }
+
+                                str1 = e1.getText().toString();
+                                str2 = e2.getText().toString();
+
+                                cnt1 = str1.equals("") ? 0 : Integer.parseInt(str1);
+                                cnt2 = str2.equals("") ? 0 : Integer.parseInt(str2);
+
+                                SimpleDateFormat time = new SimpleDateFormat("yyyyMMdd HH:mm");
+                                String strTime = time.format(new Date());
+
+                                table[currentNum].setData(strTime, cnt1, cnt2, r1.isChecked() ? 0 : r2.isChecked() ? 1 : 2);
+                                Snackbar.make(fragView, "수정되었습니다", Snackbar.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
             }
         });
         b7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (currentNum == -1) {
+                    Toast.makeText(getContext(), "먼저 테이블을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
                 final View dialogView = inflater.inflate(R.layout.dialog, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(v.getContext());
                 dlg.setTitle("주문을 해주세요")
@@ -151,21 +192,27 @@ public class Fragment extends android.support.v4.app.Fragment {
                             }
                         })
                         .show();
-                String str1, str2, str3, str4, str5, str6;
-                if (currentNum == 0) {
-
-                } else if (currentNum == 1) {
-
-                } else if (currentNum == 2) {
-
-                } else if (currentNum == 3) {
-
-                } else {
-
-                }
             }
         });
         return fragView;
+    }
+
+    private void setData(int idx) {
+        t1.setText(table[idx].getTableName() + " 테이블");
+        t2.setText(table[idx].getEnterTime());
+        t3.setText(Integer.toString(table[idx].getSpaCnt()));
+        t4.setText(Integer.toString(table[idx].getPizCnt()));
+        t5.setText(membershipName[table[idx].getMembership()]);
+        t6.setText(Integer.toString(table[idx].getTotal()));
+    }
+
+    private void clearData(int idx) {
+        // 버튼도 바꿔주기
+        t2.setText("");
+        t3.setText("");
+        t4.setText("");
+        t5.setText("");
+        t6.setText("");
     }
 
     private void init(View v) {
