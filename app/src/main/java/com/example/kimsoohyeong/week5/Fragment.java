@@ -42,6 +42,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 currentNum = 0;
                 if (table[0].isEmpty()) {
+                    clearData(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(0);
@@ -53,6 +54,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 currentNum = 1;
                 if (table[1].isEmpty()) {
+                    clearData(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(1);
@@ -64,6 +66,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 currentNum = 2;
                 if (table[2].isEmpty()) {
+                    clearData(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(2);
@@ -75,6 +78,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 currentNum = 3;
                 if (table[3].isEmpty()) {
+                    clearData(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(3);
@@ -144,28 +148,12 @@ public class Fragment extends android.support.v4.app.Fragment {
                                 String str1, str2;
                                 int cnt1, cnt2;
                                 EditText e1, e2;
-                                RadioButton r1, r2, r3;
+                                RadioButton r1, r2;
 
                                 e1 = (EditText)dialogView.findViewById(R.id.e1);
                                 e2 = (EditText)dialogView.findViewById(R.id.e2);
                                 r1 = (RadioButton)dialogView.findViewById(R.id.r1);
                                 r2 = (RadioButton)dialogView.findViewById(R.id.r2);
-//                                r3 = (RadioButton)dialogView.findViewById(R.id.r3);
-
-//                                e1.setText(table[currentNum].getSpaCnt());
-//                                e2.setText(table[currentNum].getPizCnt());
-//
-//                                switch (table[currentNum].getMembership()) {
-//                                    case 0:
-//                                        r1.setChecked(true);
-//                                        break;
-//                                    case 1:
-//                                        r2.setChecked(true);
-//                                        break;
-//                                    case 2:
-//                                        r3.setChecked(true);
-//                                        break;
-//                                }
 
                                 str1 = e1.getText().toString();
                                 str2 = e2.getText().toString();
