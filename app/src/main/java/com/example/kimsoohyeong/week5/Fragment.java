@@ -43,9 +43,11 @@ public class Fragment extends android.support.v4.app.Fragment {
                 currentNum = 0;
                 if (table[0].isEmpty()) {
                     clearData(currentNum);
+                    setButton(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(0);
+                    setButton(currentNum);
                 }
             }
         });
@@ -55,9 +57,11 @@ public class Fragment extends android.support.v4.app.Fragment {
                 currentNum = 1;
                 if (table[1].isEmpty()) {
                     clearData(currentNum);
+                    setButton(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(1);
+                    setButton(currentNum);
                 }
             }
         });
@@ -67,9 +71,11 @@ public class Fragment extends android.support.v4.app.Fragment {
                 currentNum = 2;
                 if (table[2].isEmpty()) {
                     clearData(currentNum);
+                    setButton(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(2);
+                    setButton(currentNum);
                 }
             }
         });
@@ -79,9 +85,11 @@ public class Fragment extends android.support.v4.app.Fragment {
                 currentNum = 3;
                 if (table[3].isEmpty()) {
                     clearData(currentNum);
+                    setButton(currentNum);
                     Toast.makeText(v.getContext(), "비어있는 테이블입니다", Toast.LENGTH_SHORT).show();
                 } else {
                     setData(3);
+                    setButton(currentNum);
                 }
             }
         });
@@ -123,6 +131,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                                 table[currentNum].setData(strTime, cnt1, cnt2, r1.isChecked() ? 0 : r2.isChecked() ? 1 : 2);
                                 setData(currentNum);
                                 setTable(currentNum);
+                                setButton(currentNum);
                                 Snackbar.make(fragView, "정보가 입력되었습니다", Snackbar.LENGTH_SHORT).show();
                             }
                         })
@@ -178,6 +187,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                 }
                 table[currentNum].clear();
                 clearData(currentNum);
+                setButton(currentNum);
             }
         });
         return fragView;
@@ -192,6 +202,18 @@ public class Fragment extends android.support.v4.app.Fragment {
         t6.setText(Integer.toString(table[idx].getTotal()));
     }
 
+    private void setButton(int idx) {
+        if (table[idx].isEmpty()) {
+            b5.setEnabled(true);
+            b6.setEnabled(false);
+            b7.setEnabled(false);
+        } else {
+            b5.setEnabled(false);
+            b6.setEnabled(true);
+            b7.setEnabled(true);
+        }
+    }
+
     private void setTable(int idx) {
         switch (idx) {
             case 0:
@@ -203,7 +225,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             case 2:
                 b3.setText(tableName[idx] + " table");
                 break;
-            case 4:
+            case 3:
                 b4.setText(tableName[idx] + " table");
                 break;
         }
@@ -219,7 +241,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             case 2:
                 b3.setText(tableName[idx] + " table(비어있음)");
                 break;
-            case 4:
+            case 3:
                 b4.setText(tableName[idx] + " table(비어있음)");
                 break;
         }
@@ -248,7 +270,10 @@ public class Fragment extends android.support.v4.app.Fragment {
         t5 = (TextView)v.findViewById(R.id.t5);
         t6 = (TextView)v.findViewById(R.id.t6);
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) {
             table[i] = new Table(tableName[i]);
+            clearData(i);
+            setButton(i);
+        }
     }
 }
